@@ -34,8 +34,8 @@ public class QuteProperties {
     /*
      * Temporary Extra Configs
      */
-    Set<String> templateRoots = Set.of("/"); // TODO: I don't know if this is correct
-    List<String> templatePaths = List.of("templates/");
+    Set<String> templateRoots = Set.of("/templates/"); // TODO: I don't know if this is correct
+    List<String> templatePaths = List.of();
     List<String> resolverClasses = List.of(); // TODO: is this relevant?
     Locale defaultLocale = Locale.ENGLISH; // TODO: is this relevant?
 

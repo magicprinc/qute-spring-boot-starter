@@ -1,13 +1,13 @@
 package net.snemeis;
 
 import io.quarkus.qute.Variant;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URLConnection;
 
-@Slf4j
+//@Slf4j
 @Component
 public class ContentTypes {
 
@@ -40,7 +40,8 @@ public class ContentTypes {
                 return contentType;
             }
         }
-        log.warn("Unable to detect the content type for {}; using application/octet-stream", templatePath);
+//        log.warn("Unable to detect the content type for {}; using application/octet-stream", templatePath);
+        System.out.println("unable to detect content type");
         return "application/octet-stream";
     }
 }

@@ -20,16 +20,13 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
@@ -93,8 +90,9 @@ public class EngineProducer {
 
 //        log.debug("Initializing Qute [templates: {}, tags: {}, resolvers: {}", context.getTemplatePaths(), tags,
 //                context.getResolverClasses());
-        log.debug("Initializing Qute [templates: {}, tags: {}, resolvers: {}", config.templatePaths, tags,
-                config.resolverClasses);
+//        log.debug("Initializing Qute [templates: {}, tags: {}, resolvers: {}", config.templatePaths, tags,
+//                config.resolverClasses);
+        System.out.println("initializing something in qute starter");
 
         EngineBuilder builder = Engine.builder();
 
@@ -187,7 +185,8 @@ public class EngineProducer {
             } else {
                 builder.addValueResolver((ValueResolver) resolver);
             }
-            log.debug("Added generated value resolver: {}", resolverClass);
+//            log.debug("Added generated value resolver: {}", resolverClass);
+            System.out.println("added some value resolver");
         }
 
         // Add tags
@@ -195,7 +194,8 @@ public class EngineProducer {
             // Strip suffix, item.html -> item
             String tagName = tag.contains(".") ? tag.substring(0, tag.indexOf('.')) : tag;
             String tagTemplateId = TAGS + tagName;
-            log.debug("Registered UserTagSectionHelper for {} [{}]", tagName, tagTemplateId);
+//            log.debug("Registered UserTagSectionHelper for {} [{}]", tagName, tagTemplateId);
+            System.out.println("did something something usertagselectionhelper");
             builder.addSectionHelper(new UserTagSectionHelper.Factory(tagName, tagTemplateId));
         }
 
@@ -259,6 +259,7 @@ public class EngineProducer {
         engine = builder.build();
 
         // Load discovered template files
+        // pre-fill some list with some pre-defined templates (optionally)
         Map<String, List<Template>> discovered = new HashMap<>();
         for (String path : config.templatePaths) {
             Template template = engine.getTemplate(path);
@@ -352,7 +353,9 @@ public class EngineProducer {
         for (String templateRoot : templateRoots) {
             URL resource = null;
             String templatePath = templateRoot + path;
-            log.debug("Locate template file for {}", templatePath);
+//            log.debug("Locate template file for {}", templatePath);
+            System.out.println(templatePath);
+//            resource = locatePath(templatePath);
             resource = locatePath(templatePath);
             if (resource == null) {
                 // Try path with suffixes
@@ -373,7 +376,8 @@ public class EngineProducer {
             }
         }
         // Then try the template contents
-        log.debug("Locate template contents for {}", path);
+        System.out.println("going to locate templates now");
+//        log.debug("Locate template contents for {}", path);
         String content = templateContents.get(path);
         if (path == null) {
             // Try path with suffixes
@@ -395,11 +399,12 @@ public class EngineProducer {
     }
 
     private URL locatePath(String path) {
-        ClassLoader cl = getClass().getClassLoader();
-        if (cl == null) {
-            cl = EngineProducer.class.getClassLoader();
+        try {
+            var resource = Objects.requireNonNull(getClass().getResource(path));
+            return resource.toURI().toURL();
+        } catch (Exception e) {
+            return null;
         }
-        return cl.getResource(path);
     }
 
     Variant createVariant(String path) {
