@@ -31,10 +31,14 @@ public class QuteProperties {
 
     public Charset defaultCharset = StandardCharsets.UTF_8;
 
+    public Boolean devMode = false;
+
+    public String devPrefix = System.getenv("user.dir");
+
     /*
      * Temporary Extra Configs
      */
-    Set<String> templateRoots = Set.of("/templates/"); // TODO: I don't know if this is correct
+    Set<String> templateRoots = Set.of("/templates/");
     List<String> templatePaths = List.of();
     List<String> resolverClasses = List.of(); // TODO: is this relevant?
     Locale defaultLocale = Locale.ENGLISH; // TODO: is this relevant?

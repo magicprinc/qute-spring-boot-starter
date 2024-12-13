@@ -5,6 +5,8 @@ import io.quarkus.qute.TemplateInstance.Initializer;
 import io.quarkus.qute.TemplateLocator.TemplateLocation;
 import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
@@ -15,14 +17,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -52,6 +48,8 @@ public class EngineProducer {
     private final Pattern templatePathExclude;
     private final Locale defaultLocale;
     private final Charset defaultCharset;
+    private final Boolean devMode;
+    private final String devPrefix;
     private final ApplicationContext container; // TODO: rename context, as spring would do it
     private final Environment environment;
 
@@ -66,7 +64,9 @@ public class EngineProducer {
             List<NamespaceResolver> namespaceResolvers,
             List<ParserHook> parserHooks,
             ApplicationContext context,
-            Environment environment
+            Environment environment,
+            @Value("${spring.qute.dev-mode:false}") boolean devMode,
+            @Value("${spring.qute.dev-prefix:}") String devPrefix
     ) {
         /* TODO: check what needs to be done here
             this.templateRoots = context.getTemplateRoots();                    // probably can be put into the QuteProperties
@@ -76,13 +76,20 @@ public class EngineProducer {
          */
         this.templateRoots = config.templateRoots;
         this.defaultLocale = config.defaultLocale;
-        this.templateContents = Map.of("index", "this is the index content????", "testTagOne", "this is the first test tag");
-        this.tags = List.of("testTagOne");
+//        this.templateContents = Map.of("index", "this is the index content????", "testTagOne", "this is the first test tag");
+        this.templateContents = new HashMap<>();
+//        this.tags = List.of("testTagOne");
+        this.tags = List.of();
 
         this.contentTypes = contentTypes;
         this.suffixes = config.suffixes;
         this.templatePathExclude = config.templatePathExclude;
         this.defaultCharset = config.defaultCharset;
+
+        // TODO: test that    devmode resolves files by filepath
+        // TODO: test that no devmode resolves files by classpath
+        this.devMode = devMode;
+        this.devPrefix = devPrefix;
 
 //        this.container = Arc.container();
         this.container = context;
@@ -348,35 +355,67 @@ public class EngineProducer {
         }
         // TODO: if dev mode, try to search for it not in the classpath, but in the actual folder it resides in
         // so: ${user.dir}/...
+        if (this.devMode) {
+//            engine.clearTemplates();
+            String templatePath = this.devPrefix + path;
+            URL resource =  null;
+            System.out.println("Dev path would be: " + templatePath);
 
-        // First try to locate file-based templates
-        for (String templateRoot : templateRoots) {
-            URL resource = null;
-            String templatePath = templateRoot + path;
-//            log.debug("Locate template file for {}", templatePath);
-            System.out.println(templatePath);
-//            resource = locatePath(templatePath);
-            resource = locatePath(templatePath);
-            if (resource == null) {
-                // Try path with suffixes
-                for (String suffix : suffixes) {
-                    String pathWithSuffix = path + "." + suffix;
-                    if (templatePathExclude.matcher(pathWithSuffix).matches()) {
-                        continue;
-                    }
-                    templatePath = templateRoot + pathWithSuffix;
-                    resource = locatePath(templatePath);
-                    if (resource != null) {
-                        break;
-                    }
+            for (String suffix : suffixes) {
+                String pathWithSuffix = templatePath + "." + suffix;
+                if (templatePathExclude.matcher(pathWithSuffix).matches()) {
+                    continue;
+                }
+
+                File file = new File(pathWithSuffix);
+                if (!file.exists() && file.isDirectory()) {
+                    continue;
+                }
+
+                try {
+                    templateContents.put(path, FileUtils.readFileToString(file, StandardCharsets.UTF_8));
+                    break;
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
                 }
             }
-            if (resource != null) {
-                return Optional.of(new ResourceTemplateLocation(resource, createVariant(templatePath)));
+        }
+
+        // TODO: fill this via config parameter
+        List<String> classPathPrefixes = List.of("lib1", "lib2");
+        // TODO: properly calculate and actullay use
+        boolean isExclusivelyInClassPathForExampleFragments = false;
+
+        // locate by classpath
+        if(!devMode || (devMode && isExclusivelyInClassPathForExampleFragments)) {
+            // First try to locate file-based templates
+            for (String templateRoot : templateRoots) {
+                URL resource = null;
+                String templatePath = templateRoot + path;
+    //            log.debug("Locate template file for {}", templatePath);
+                System.out.println(templatePath);
+    //            resource = locatePath(templatePath);
+                resource = locatePath(templatePath);
+                if (resource == null) {
+                    // Try path with suffixes
+                    for (String suffix : suffixes) {
+                        String pathWithSuffix = path + "." + suffix;
+                        if (templatePathExclude.matcher(pathWithSuffix).matches()) {
+                            continue;
+                        }
+                        templatePath = templateRoot + pathWithSuffix;
+                        resource = locatePath(templatePath);
+                        if (resource != null) {
+                            break;
+                        }
+                    }
+                }
+                if (resource != null) {
+                    return Optional.of(new ResourceTemplateLocation(resource, createVariant(templatePath)));
+                }
             }
         }
-        // Then try the template contents
-        System.out.println("going to locate templates now");
+
 //        log.debug("Locate template contents for {}", path);
         String content = templateContents.get(path);
         if (path == null) {
