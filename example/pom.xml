@@ -8,8 +8,9 @@
 		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>net.snemeis</groupId>
-	<artifactId>qute-production</artifactId>
+	<artifactId>example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>qute-production</name>
 	<description>qute-production</description>
@@ -18,11 +19,11 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>net.snemeis</groupId>
-			<artifactId>spring-boot-qute-starter</artifactId>
-			<version>0.0.1</version>
-		</dependency>
+        <dependency>
+            <groupId>net.snemeis</groupId>
+            <artifactId>spring-boot-qute-starter</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 		<dependency>
 			<groupId>com.thedeanda</groupId>
 			<artifactId>lorem</artifactId>

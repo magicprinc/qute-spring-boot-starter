@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/qute-spring-sample-server/pom.xml" />
         <option value="$PROJECT_DIR$/qute-production/pom.xml" />
+        <option value="$PROJECT_DIR$/example/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -110,6 +110,7 @@ public class EngineProducer {
         builder.addValueResolver(ValueResolvers.collectionResolver());
         builder.addValueResolver(ValueResolvers.mapperResolver());
         builder.addValueResolver(ValueResolvers.mapEntryResolver());
+        builder.addValueResolver(ValueResolvers.mapResolver());
         // foo.string.raw returns a RawString which is never escaped
         builder.addValueResolver(ValueResolvers.rawResolver()); // TODO: look into this for learning
         builder.addValueResolver(ValueResolvers.logicalAndResolver());

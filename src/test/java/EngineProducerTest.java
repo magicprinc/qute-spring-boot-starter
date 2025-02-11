@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestComponent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
+import org.springframework.ui.ConcurrentModel;
+import org.springframework.ui.Model;
 
 import java.util.Locale;
 
@@ -56,6 +58,23 @@ public class EngineProducerTest {
     void qute_translates_messages_via_the_sample_component() {
         String out = Qute.engine().parse("This is the translated message: {cdi:SampleComponent.translate('something')}").render();
         assertEquals("This is the translated message: default message", out);
+    }
+
+    @Test
+    void qute_resolves_map_to_usable_variables() {
+        Model model = new ConcurrentModel();
+        model.addAttribute("name", "World");
+
+        String out = Qute.engine()
+                .parse("Hello {name}!")
+                .render(model.asMap());
+        assertEquals("Hello World!", out);
+
+        String out2 = Qute.engine()
+                .parse("Hello {name}!")
+                .data(model.asMap())
+                .render();
+        assertEquals("Hello World!", out2);
     }
 
     @TestComponent(value = "SampleComponent")
