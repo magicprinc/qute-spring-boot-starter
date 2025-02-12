@@ -1,10 +1,11 @@
 ![Build](https://github.com/anosim114/qute-spring-boot-starter/actions/workflows/maven.yml/badge.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.snemeis/qute-spring-boot-starter/badge.svg)](https://central.sonatype.com/artifact/net.snemeis/qute-spring-boot-starter)
 
+<p align="center">
+    <img src="https://github.com/anosim114/qute-spring-boot-starter/blob/master/_readme/qute_spring.png" alt="Logo" width="400" />
+</p>
 
-![qute spring](_readme/qute_spring.png)
-
-# Qute Spring Boot Starter
+<h1 align="center">Qute Spring Boot Starter</h1> 
 
 > Qute is primarily designed as a Quarkus extension.
 > It is possible to use it as a "standalone" library too.
