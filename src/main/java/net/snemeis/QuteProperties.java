@@ -17,7 +17,7 @@ public class QuteProperties {
     /*
      * General Configs
      */
-    public List<String> suffixes = List.of("qute.html", "qute.txt", "html,txt");
+    public List<String> suffixes = List.of("qute.html", "qute.txt", "html", "txt");
 
     public Map<String, String> contentTypes = Map.of();
 
@@ -33,7 +33,7 @@ public class QuteProperties {
 
     public Boolean devMode = false;
 
-    public String devPrefix = System.getenv("user.dir");
+    public String devPrefix = System.getenv("user.dir") + "/src/main/resources/templates/";
 
     /*
      * Temporary Extra Configs
