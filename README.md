@@ -20,7 +20,7 @@ Sure thing, here we go!
 
 This project is in its core a port of the Quarkus Qute configuration to Spring Boot
 enabling various Spring specific features to be used instead of Quarkus's.
-It demonstrates how to set up and use JTE in a Spring Boot application,
+It demonstrates how to set up and use Qute in a Spring Boot application,
 offering a better alternative to other templating engines like for example Thymeleaf.
 
 ## Getting started
