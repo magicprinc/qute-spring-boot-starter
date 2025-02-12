@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.snemeis</groupId>
-    <artifactId>spring-boot-qute-starter</artifactId>
+    <artifactId>qute-spring-boot-starter</artifactId>
     <version>0.0.2</version>
     <name>Spring Boot Qute Starter</name>
     <description>Starter of the Quarkus Qute templating engine for Spring Boot</description>
