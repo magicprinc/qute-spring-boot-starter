@@ -83,7 +83,7 @@ public String index(Model model) {
 
 ## Configuration
 
-Original implementation for reference and explanations: [Qute Reference Guide 4.15. Configuration Reference](https://quarkus.io/guides/qute-reference#configuration-reference).
+Original configuration and their explanations: [Qute Reference Guide 4.15. Configuration Reference](https://quarkus.io/guides/qute-reference#configuration-reference).
 
 ```properties
 # default values, can be overwritten
