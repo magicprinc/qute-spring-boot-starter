@@ -1,3 +1,7 @@
+![Build](https://github.com/anosim114/qute-spring-boot-starter/actions/workflows/maven.yml/badge.svg)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.snemeis/qute-spring-boot-starter/badge.svg)](https://central.sonatype.com/artifact/net.snemeis/qute-spring-boot-starter)
+
+
 ![qute spring](_readme/qute_spring.png)
 
 # Qute Spring Boot Starter
