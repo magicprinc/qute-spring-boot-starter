@@ -134,3 +134,7 @@ from a message bundle is still valid:
 ```qute
 {msg:message(someKey,'some value passed through')}
 ```
+
+### Not supported features
+
+- [3.5.8. User-defined Tags](https://quarkus.io/guides/qute-reference#user_tags)

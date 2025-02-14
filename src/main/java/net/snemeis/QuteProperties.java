@@ -1,25 +1,31 @@
 package net.snemeis;
 
 import io.quarkus.qute.TemplateException;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
 
+@Data
 @ConfigurationProperties(prefix = "spring.qute")
 public class QuteProperties {
 
     /*
      * General Configs
      */
-    public List<String> suffixes = List.of("qute.html", "qute.txt", "html", "txt");
+    public List<String> suffixes = List.of("", ".qute.html", ".qute.txt", ".html", ".txt");
 
-    public Map<String, String> contentTypes = Map.of();
+    public String prefix = "/templates/";
+
+    public String devPrefix = System.getProperty("user.dir") + "/src/main/resources/templates/";
+
+    public Boolean devMode = false;
+
+//    public Map<String, String> contentTypes = Map.of("qute.html", "text/html");
 
     public List<String> typeCheckExcludes = List.of();
 
@@ -31,17 +37,16 @@ public class QuteProperties {
 
     public Charset defaultCharset = StandardCharsets.UTF_8;
 
-    public Boolean devMode = false;
-
-    public String devPrefix = System.getenv("user.dir") + "/src/main/resources/templates/";
+    public Boolean cachingEnabled = true;
 
     /*
      * Temporary Extra Configs
      */
-    Set<String> templateRoots = Set.of("/templates/");
-    List<String> templatePaths = List.of();
     List<String> resolverClasses = List.of(); // TODO: is this relevant?
+
     Locale defaultLocale = Locale.ENGLISH; // TODO: is this relevant?
+
+    // List<String> templatePaths = List.of();
 
     /*
      * Runtime Configs

@@ -9,15 +9,14 @@
     <version>0.0.3</version>
     <name>Spring Boot Qute Starter</name>
     <description>Starter of the Quarkus Qute templating engine for Spring Boot</description>
-    <url>https://github.com/anosim114/spring-boot-qute-starter</url>
+    <url>https://github.com/anosim114/qute-spring-boot-starter</url>
     <scm>
-      <url>https://github.com/anosim114/spring-boot-qute-starter</url>
+      <url>https://github.com/anosim114/qute-spring-boot-starter</url>
     </scm>
     <developers>
       <developer>
         <id>anosim114</id>
-        <name>anosim114</name>
-        <url>https://github.com/anosim114/spring-boot-qute-starter</url>
+        <url>https://github.com/anosim114/qute-spring-boot-starter</url>
       </developer>
     </developers>
     <licenses>
@@ -49,11 +48,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.18.0</version>
-        </dependency>
 
         <!-- Spring dependency-->
         <dependency>
@@ -67,11 +61,22 @@
             <version>3.4.2</version>
         </dependency>
 
-        <!-- Code generation-->
+        <!-- others -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.36</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.16</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
