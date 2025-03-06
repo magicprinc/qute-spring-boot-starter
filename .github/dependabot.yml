@@ -11,7 +11,8 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      updates:
+      all:
+        applies-to: version-updates
         update-types:
           - "patch"
           - "minor"
@@ -22,7 +23,8 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      updates:
+      all:
+        applies-to: version-updates
         update-types:
           - "patch"
           - "minor"
