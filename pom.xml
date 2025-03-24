@@ -6,7 +6,7 @@
 
     <groupId>net.snemeis</groupId>
     <artifactId>qute-spring-boot-starter</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
     <name>Qute Spring Boot Starter</name>
     <description>Starter of the Quarkus Qute templating engine for Spring Boot</description>
     <url>https://github.com/anosim114/qute-spring-boot-starter</url>
@@ -34,7 +34,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.spring>3.4.3</version.spring>
+        <version.spring>3.4.4</version.spring>
         <version.lombok>1.18.36</version.lombok>
     </properties>
 
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-qute</artifactId>
-            <version>3.19.3</version>
+            <version>3.21.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.quarkus</groupId>
