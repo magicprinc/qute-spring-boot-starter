@@ -10,10 +10,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    groups:
-      updates:
-        applies-to: version-updates
-        update-types:
-          - "patch"
-          - "minor"
-          - "major"
